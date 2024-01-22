@@ -18,16 +18,18 @@ public class PlayerController : MonoBehaviour
     public LayerMask whatIsGround;
     private Animator animator;
     public GameObject bullet;
-
-    // Start is called before the first frame update
+    public static PlayerController instance;
+    private void Awake()
+    {
+        instance = this;
+    }
     void Start()
     {
         animator = GetComponent<Animator>();
-        // if (Application.platform == RuntimePlatform.Android)
-        // {
-        //     Debug.Log("Mobile");
-        //     mobileControls.gameObject.SetActive(true);
-        // }
+        if (IsOnMobile())
+        {
+            mobileControls.gameObject.SetActive(true);
+        }
     }
 
     // Update is called once per frame
@@ -36,7 +38,7 @@ public class PlayerController : MonoBehaviour
         if (IsOnDesktop())
         {
             HandleDesktopInput();
-            ApplyGravity();
+            //ApplyGravity();
             if (Input.GetKeyDown(KeyCode.Space))
             {
                 ApplyJumping();
@@ -51,7 +53,6 @@ public class PlayerController : MonoBehaviour
         else if (IsOnMobile())
         {
             HandleMobileInput();
-            ApplyGravity();
             MovePlayer();
             RotatePlayerAndCamera(fixedTouchField.TouchDist.x, fixedTouchField.TouchDist.y);
         }
@@ -80,14 +81,17 @@ public class PlayerController : MonoBehaviour
 
     void HandleMobileInput()
     {
+        float yStore = movingAxis.y;
         Vector3 joyStickMove = transform.right * joystick.Horizontal + transform.forward * joystick.Vertical;
         movingAxis = joyStickMove;
         movingAxis.Normalize();
         movingAxis *= movingSpeed;
+        movingAxis.y = yStore;
     }
 
     void ApplyGravity()
     {
+
         if (characterController.isGrounded)
         {
             movingAxis.y = Physics.gravity.y * gravityModifier * Time.deltaTime;
@@ -96,17 +100,19 @@ public class PlayerController : MonoBehaviour
         {
             movingAxis.y += Physics.gravity.y * gravityModifier * Time.deltaTime;
         }
-        canJump = Physics.OverlapSphere(groundCheckPoint.position, .25f, whatIsGround).Length > 0;
     }
-    void ApplyJumping()
+    public void ApplyJumping()
     {
+        canJump = Physics.OverlapSphere(groundCheckPoint.position, .25f, whatIsGround).Length > 0;
         if (canJump)
         {
+            Debug.Log("called");
             movingAxis.y = jumpPower;
             canDoubleJump = true;
         }
         else if (canDoubleJump)
         {
+            Debug.Log("double jump called");
             movingAxis.y = jumpPower;
             canDoubleJump = false;
         }
@@ -128,8 +134,24 @@ public class PlayerController : MonoBehaviour
         verticalRotation = Mathf.Clamp(verticalRotation, -45f, 45f);
         cameraTransform.rotation = Quaternion.Euler(verticalRotation, transform.eulerAngles.y, transform.eulerAngles.z);
     }
-    void fireBullet()
+    public void fireBullet()
     {
+        RaycastHit hit;
+        if (Physics.Raycast(cameraTransform.position, cameraTransform.forward, out hit, 50f))
+        {
+            if (Vector3.Distance(cameraTransform.position, hit.point) > 2f)
+            {
+                bulletPoint.LookAt(hit.point);
+            }
+        }
+        else
+        {
+            bulletPoint.LookAt(cameraTransform.position + (cameraTransform.forward * 30f));
+        }
         Instantiate(bullet, bulletPoint.position, bulletPoint.rotation);
+    }
+    private void FixedUpdate()
+    {
+        ApplyGravity();
     }
 }

@@ -7,6 +7,7 @@ public class BulletController : MonoBehaviour
     Rigidbody rb;
     public float movingSpeed, lifeTime;
     public ParticleSystem lasertParticleEffect;
+    public int demagePower = 1;
     // Start is called before the first frame update
     void Start()
     {
@@ -25,7 +26,11 @@ public class BulletController : MonoBehaviour
     }
     private void OnTriggerEnter(Collider other)
     {
+        if (other.gameObject.tag == "Enemy")
+        {
+            other.gameObject.GetComponent<EnemyHealth>().DamageEnemy(demagePower);
+        }
         Destroy(this.gameObject);
-        Instantiate(lasertParticleEffect, transform.position, transform.rotation);
+        Instantiate(lasertParticleEffect, transform.position + (transform.forward * (-movingSpeed * Time.deltaTime)), transform.rotation);
     }
 }

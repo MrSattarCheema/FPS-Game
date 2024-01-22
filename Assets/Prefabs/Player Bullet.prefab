@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 2029157014394929047}
   - component: {fileID: 4151320555334346064}
   - component: {fileID: 5147725013943645285}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Player Bullet
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -123,6 +123,7 @@ MonoBehaviour:
   movingSpeed: 15
   lifeTime: 4
   lasertParticleEffect: {fileID: 7913138509378614584, guid: 989abc3e0156d8941bc8e26e8954fc0e, type: 3}
+  demagePower: 5
 --- !u!54 &4151320555334346064
 Rigidbody:
   m_ObjectHideFlags: 0
