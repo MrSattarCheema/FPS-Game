@@ -33,7 +33,7 @@ public class BulletController : MonoBehaviour
         }
         if (other.gameObject.tag == "Player" && demagePlayer)
         {
-            //Destroy(other.gameObject);
+            PlayerHealthController.Instance.DemagePlayer(demagePower);
         }
         if ((other.tag == "Player" && demageEnemy) || (other.tag == "Enemy" && demagePlayer))
         {

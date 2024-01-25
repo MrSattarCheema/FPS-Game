@@ -71,7 +71,7 @@ public class EnemyController : MonoBehaviour
             }
 
             fireCounter -= Time.deltaTime;
-            if (fireCounter <= 0 && canFire)
+            if (fireCounter <= 0 && canFire && PlayerController.instance.isActiveAndEnabled)
             {
                 fireCounter = fireRate;
 

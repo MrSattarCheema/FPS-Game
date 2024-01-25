@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PlayerController : MonoBehaviour
 {
@@ -17,8 +18,8 @@ public class PlayerController : MonoBehaviour
     public Transform groundCheckPoint;
     public LayerMask whatIsGround;
     private Animator animator;
-    public GameObject bullet;
     public static PlayerController instance;
+    public Gun gun;
     private void Awake()
     {
         instance = this;
@@ -30,6 +31,7 @@ public class PlayerController : MonoBehaviour
         {
             mobileControls.gameObject.SetActive(true);
         }
+        StartCoroutine(enableCharacterController());
     }
 
     // Update is called once per frame
@@ -44,9 +46,13 @@ public class PlayerController : MonoBehaviour
                 ApplyJumping();
             }
             MovePlayer();
-            if (Input.GetMouseButtonDown(0))
+            if (Input.GetMouseButtonDown(0) && gun.fireCounter <= 0)
             {
                 fireBullet();
+            }
+            if (Input.GetMouseButton(0) && gun.canAutoFire && gun.fireCounter <= 0)
+            {
+                FireShot();
             }
             RotatePlayerAndCamera(Input.GetAxisRaw("Mouse X"), Input.GetAxisRaw("Mouse Y"));
         }
@@ -148,10 +154,27 @@ public class PlayerController : MonoBehaviour
         {
             bulletPoint.LookAt(cameraTransform.position + (cameraTransform.forward * 30f));
         }
-        Instantiate(bullet, bulletPoint.position, bulletPoint.rotation);
+
+        FireShot();
     }
     private void FixedUpdate()
     {
         ApplyGravity();
+    }
+    IEnumerator enableCharacterController()
+    {
+        yield return new WaitForFixedUpdate();
+        gameObject.GetComponent<CharacterController>().enabled = true;
+
+    }
+    public void FireShot()
+    {
+        if (gun.ammoAmount > 0)
+        {
+            gun.ammoAmount--;
+            UiController.instance.ammoTxt.text = "Ammo: " + gun.ammoAmount;
+            Instantiate(gun.bullet, bulletPoint.position, bulletPoint.rotation);
+            gun.fireCounter = gun.fireRate;
+        }
     }
 }
