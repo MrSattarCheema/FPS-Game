@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 4151320555334346064}
   - component: {fileID: 5147725013943645285}
   m_Layer: 7
-  m_Name: Player Bullet
+  m_Name: Pistol Bullet
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -120,7 +120,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1128ef637fb3875479eb21f5b567be6c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  movingSpeed: 15
+  movingSpeed: 22
   lifeTime: 4
   lasertParticleEffect: {fileID: 7913138509378614584, guid: 989abc3e0156d8941bc8e26e8954fc0e, type: 3}
   demagePower: 5

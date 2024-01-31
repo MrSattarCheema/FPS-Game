@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 7913138509378614584}
   - component: {fileID: 258475701940924510}
   m_Layer: 0
-  m_Name: Laser Impact Partical Effect
+  m_Name: Sniper Bullet Bullet Partical Effect
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4835,7 +4835,7 @@ ParticleSystemRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 44516568b0ded3c459ee221a80e0f68b, type: 2}
+  - {fileID: 2100000, guid: e3784dc3368df5143bb411844042a967, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

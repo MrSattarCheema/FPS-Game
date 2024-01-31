@@ -19,7 +19,7 @@ public class EnemyHealth : MonoBehaviour
     public void DamageEnemy(int demagePower)
     {
         currenHealth -= demagePower;
-        if (currenHealth == 0)
+        if (currenHealth <= 0)
         {
             Destroy(gameObject);
         }

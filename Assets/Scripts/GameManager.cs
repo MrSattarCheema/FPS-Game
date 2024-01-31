@@ -24,7 +24,6 @@ public class GameManager : MonoBehaviour
     public void loadCurrentScene()
     {
         StartCoroutine(waitBeforeSceneLoad());
-
     }
     IEnumerator waitBeforeSceneLoad()
     {

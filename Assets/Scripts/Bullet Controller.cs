@@ -34,6 +34,7 @@ public class BulletController : MonoBehaviour
         if (other.gameObject.tag == "Player" && demagePlayer)
         {
             PlayerHealthController.Instance.DemagePlayer(demagePower);
+            UiController.instance.showDemage();
         }
         if ((other.tag == "Player" && demageEnemy) || (other.tag == "Enemy" && demagePlayer))
         {

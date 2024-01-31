@@ -2,10 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class AmmoPicker : MonoBehaviour
+public class WeaponPick : MonoBehaviour
 {
-    public int ammoPickUp;
-    // Start is called before the first frame update
+    public string name;
     void Start()
     {
 
@@ -21,7 +20,7 @@ public class AmmoPicker : MonoBehaviour
         if (other.tag == "Player")
         {
             Destroy(gameObject);
-            PlayerController.instance.getAmmo(ammoPickUp);
+            PlayerController.instance.getWeapon(name);
         }
     }
 }
